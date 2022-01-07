@@ -18,9 +18,7 @@ class VcConfigService(val repository: VcConfigRepository) {
         return VcPresentationConfigResponse.fromDomain(savedEntity)
     }
 
-    fun fetchAll(): List<VcPresentationConfig> {
-        TODO("Not yet implemented")
-    }
+    fun fetchAll(): MutableList<VcConfigEntity> = repository.findAll()
 
     @Throws(PresentationConfigNotFound::class)
     fun findOne(presentationConfigId: String): VcPresentationConfig {

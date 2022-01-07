@@ -1,6 +1,7 @@
 package com.ssi.oidc.vcoidcauth.dtos
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.ssi.oidc.vcoidcauth.domain.VcConfigEntity
 
 data class VcPresentationConfig(
         @JsonProperty("id")
@@ -13,8 +14,14 @@ data class VcPresentationConfig(
         val name: String = "",
 
         @JsonProperty("requested_attributes")
-        val requestedAttributes: List<Attribute> = emptyList()
-)
+        val requestedAttributes: Set<Attribute> = emptySet()
+) {
+    fun toEntity(): VcConfigEntity = VcConfigEntity(
+            subjectIdentifier = subjectIdentifier,
+            name = name,
+            requestedAttributes = requestedAttributes.map { it.toAttributeEntity() }.toSet()
+    )
+}
 
 data class Attribute(
         @JsonProperty("name")
@@ -22,7 +29,12 @@ data class Attribute(
 
         @JsonProperty("restrictions")
         val restrictions: Restriction
-)
+) {
+    fun toAttributeEntity(): com.ssi.oidc.vcoidcauth.domain.Attribute = com.ssi.oidc.vcoidcauth.domain.Attribute(
+            name = name,
+            restrictions = restrictions.toRestrictionsEntity()
+    )
+}
 
 data class Restriction(
         @JsonProperty("schema_id")
@@ -42,4 +54,13 @@ data class Restriction(
 
         @JsonProperty("cred_def_id")
         val credDefId: String
-)
+) {
+    fun toRestrictionsEntity(): com.ssi.oidc.vcoidcauth.domain.Restriction = com.ssi.oidc.vcoidcauth.domain.Restriction(
+            schemaId = schemaId,
+            schemaIssuerDid = schemaIssuerDid,
+            schemaName = schemaName,
+            schemaVersion = schemaVersion,
+            issuerDid = issuerDid,
+            credDefId = credDefId
+    )
+}

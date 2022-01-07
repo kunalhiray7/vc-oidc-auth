@@ -21,8 +21,6 @@ class VcConfigService(val repository: VcConfigRepository) {
     fun fetchAll(): MutableList<VcConfigEntity> = repository.findAll()
 
     @Throws(PresentationConfigNotFound::class)
-    fun findOne(presentationConfigId: String): VcPresentationConfig {
-        TODO("Not yet implemented")
-    }
-
+    fun findOne(presentationConfigId: Long): VcConfigEntity =
+        repository.findById(presentationConfigId).orElseThrow { PresentationConfigNotFound("Presentation not found for ID: $presentationConfigId") }
 }

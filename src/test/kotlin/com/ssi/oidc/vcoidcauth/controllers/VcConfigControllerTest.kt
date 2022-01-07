@@ -1,5 +1,6 @@
 package com.ssi.oidc.vcoidcauth.controllers
 
+import com.ssi.oidc.vcoidcauth.domain.VcConfigEntity
 import com.ssi.oidc.vcoidcauth.dtos.VcPresentationConfig
 import com.ssi.oidc.vcoidcauth.exceptions.PresentationConfigAlreadyExistsException
 import com.ssi.oidc.vcoidcauth.exceptions.PresentationConfigNotFound
@@ -64,8 +65,8 @@ class VcConfigControllerTest {
 
     @Test
     fun `GET should return all the configurations for the VC Auth`() {
-        val response = listOf(VcPresentationConfig(id = "123", name = "my_config"),
-                VcPresentationConfig(id = "124", name = "my_config2"))
+        val response = listOf(VcConfigEntity(id = 123L, name = "my_config"),
+            VcConfigEntity(id = 124L, name = "my_config2"))
         doReturn(response).`when`(vcConfigService).fetchAll()
 
         mockMvc.perform(get("/api/v1/vc-config"))
@@ -77,8 +78,8 @@ class VcConfigControllerTest {
 
     @Test
     fun `GET should return the presentation config for a given ID`() {
-        val presentationConfigId = "1234abcd"
-        val response = VcPresentationConfig(id = presentationConfigId, name = "my_config")
+        val presentationConfigId = 123L
+        val response = VcConfigEntity(id = presentationConfigId, name = "my_config")
         doReturn(response).`when`(vcConfigService).findOne(presentationConfigId)
 
         mockMvc.perform(get("/api/v1/vc-config/$presentationConfigId"))
@@ -90,7 +91,7 @@ class VcConfigControllerTest {
 
     @Test
     fun `GET should return 404 when presentation config with given ID does not exist`() {
-        val presentationConfigId = "1234abcd"
+        val presentationConfigId = 123L
         doThrow(PresentationConfigNotFound(message = "Config not found")).`when`(vcConfigService).findOne(presentationConfigId)
 
         mockMvc.perform(get("/api/v1/vc-config/$presentationConfigId"))

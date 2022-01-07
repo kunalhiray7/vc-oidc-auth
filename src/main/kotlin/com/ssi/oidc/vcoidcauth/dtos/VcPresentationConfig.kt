@@ -5,7 +5,7 @@ import com.ssi.oidc.vcoidcauth.domain.VcConfigEntity
 
 data class VcPresentationConfig(
         @JsonProperty("id")
-        val id: String = "",
+        val id: Long = 0,
 
         @JsonProperty("subject_identifier")
         val subjectIdentifier: String = "",

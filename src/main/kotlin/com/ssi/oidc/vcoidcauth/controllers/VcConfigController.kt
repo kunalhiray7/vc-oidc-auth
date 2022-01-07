@@ -17,5 +17,5 @@ class VcConfigController(private val vcConfigService: VcConfigService) {
     fun index() = vcConfigService.fetchAll()
 
     @GetMapping("/vc-config/{id}")
-    fun findOne(@PathVariable("id") id: String) = vcConfigService.findOne(id)
+    fun findOne(@PathVariable("id") id: Long) = vcConfigService.findOne(id)
 }

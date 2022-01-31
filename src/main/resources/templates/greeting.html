@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h2>Welcome to Affinidi OIDC Provider. Scan following QR code in your Affinidi Wallet to log in</h2>
+
+<img id='qrCode'
+     th:src="'https://api.qrserver.com/v1/create-qr-code/?data=' + ${shareToken} + '&amp;size=500x500'"
+     alt=""
+     title="HELLO"
+     width="500"
+     height="500" />
+</body>
+</html>

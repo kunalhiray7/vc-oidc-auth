@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface RegistrationRepository: JpaRepository<Registration, String>
+interface RegistrationRepository: JpaRepository<Registration, String> {
+    fun findByClientIdAndClientSecret(clientId: String, clientSecret: String): Registration?
+}

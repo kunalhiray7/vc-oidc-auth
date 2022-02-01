@@ -21,16 +21,16 @@ server:
     include-message: always
 
 verifier:
-  username: <verifier_username>
-  password: <verifier_password>
+  username: affinidi_oidc_verifier
+  password: "@ffO1dcVcAuthN"
 
 verifierApi:
-  url: <verifier_api_url>
-  apiKey: <verifier_api_key>
+  url: https://affinity-verifier.dev.affinity-project.org/api/v1
+  apiKey: c01ff09031bdce0571ede599fd0ced5ab7f539b4039cc4ca105c9ca3f68613b0
 
 cloudWalletApi:
-  url: <wallet_api_url>
-  apiKey: <wallet_api_key>
+  url: https://cloud-wallet-api.dev.affinity-project.org/api/v1
+  apiKey: c01ff09031bdce0571ede599fd0ced5ab7f539b4039cc4ca105c9ca3f68613b0
 
 logging:
   level:
@@ -41,3 +41,6 @@ feign:
     config:
       default:
         loggerLevel: full
+
+self:
+  baseUrl: http://localhost:8080

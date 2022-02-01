@@ -12,6 +12,7 @@ import org.mockito.Mockito.*
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.util.LinkedMultiValueMap
@@ -25,11 +26,13 @@ class AuthControllerTest {
     @Mock
     private lateinit var authService: AuthService
 
-    @InjectMocks
     private lateinit var controller: AuthController
+
+    private val selfBaseUrl = "http://localhost"
 
     @BeforeEach
     fun setUp() {
+        controller = AuthController(authService, selfBaseUrl)
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build()
     }
 

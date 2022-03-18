@@ -1,5 +1,6 @@
 package com.ssi.oidc.vcoidcauth.controllers
 
+import com.ssi.oidc.vcoidcauth.dtos.CredShareResponseTokenRequest
 import com.ssi.oidc.vcoidcauth.dtos.OidcAuthRequest
 import com.ssi.oidc.vcoidcauth.services.AuthService
 import org.springframework.beans.factory.annotation.Value
@@ -7,13 +8,16 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.ui.ModelMap
 import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RequestMethod.*
+import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import org.springframework.web.servlet.view.RedirectView
+import javax.servlet.http.HttpServletResponse
 
-@CrossOrigin(origins = ["*"], methods = [POST, GET, PUT, OPTIONS])
+@CrossOrigin(origins = ["*"], methods = [POST, GET, PUT, OPTIONS], allowedHeaders = ["*"])
 @Controller
 class AuthController(
     private val service: AuthService,
@@ -49,5 +53,36 @@ class AuthController(
     ): String? {
         model.addAttribute("shareTokenUrl", shareTokenUrl)
         return "greeting"
+    }
+
+    @PostMapping("/api/v1/verify_share_response_token")
+    @ResponseStatus(HttpStatus.FOUND)
+    fun verifyShareResponse(
+        @RequestBody shareResponseTokenRequest: CredShareResponseTokenRequest,
+        redirectAttributes: RedirectAttributes
+    ): RedirectView {
+        service.verifyShareResponse(shareResponseTokenRequest)
+        redirectAttributes.addAttribute("id_token", "jwtToken")
+        return RedirectView("id_token")
+    }
+
+    @GetMapping("/api/v1/id_token")
+    @ResponseStatus(HttpStatus.FOUND)
+    fun getToken(
+        @RequestParam(name = "idToken", required = true) idToken: String?,
+//        redirectAttributes: RedirectAttributes,
+        model: ModelMap,
+    response: HttpServletResponse
+    ): String {
+        val redirectUrl = "https://www.google.com"
+//        redirectAttributes.addAttribute("id_token", idToken)
+        model.addAttribute("id_token", idToken)
+        model.addAttribute("redirectUrl", redirectUrl)
+        return "redirectView"
+
+//        response.status = 302
+//        response.setHeader("Location", redirectUrl)
+
+//        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(externalUrl)).build()
     }
 }

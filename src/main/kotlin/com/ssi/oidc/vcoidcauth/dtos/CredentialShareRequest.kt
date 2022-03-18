@@ -2,6 +2,7 @@ package com.ssi.oidc.vcoidcauth.dtos
 
 data class CredentialShareRequest(
     val requirements: List<CredentialRequirements> = emptyList(),
+    val callbackUrl: String? = null
 )
 
 data class CredentialRequirements(

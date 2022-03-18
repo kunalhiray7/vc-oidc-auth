@@ -21,16 +21,16 @@ server:
     include-message: always
 
 verifier:
-  username: affinidi_oidc_verifier
-  password: "@ffO1dcVcAuthN"
+  username: <username>
+  password: <password>
 
 verifierApi:
   url: https://affinity-verifier.dev.affinity-project.org/api/v1
-  apiKey: c01ff09031bdce0571ede599fd0ced5ab7f539b4039cc4ca105c9ca3f68613b0
+  apiKey: <API_Key>
 
 cloudWalletApi:
   url: https://cloud-wallet-api.dev.affinity-project.org/api/v1
-  apiKey: c01ff09031bdce0571ede599fd0ced5ab7f539b4039cc4ca105c9ca3f68613b0
+  apiKey: <API_Key>
 
 logging:
   level:

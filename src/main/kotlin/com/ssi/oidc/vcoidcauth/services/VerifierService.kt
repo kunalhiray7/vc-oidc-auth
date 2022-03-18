@@ -1,6 +1,7 @@
 package com.ssi.oidc.vcoidcauth.services
 
 import com.ssi.oidc.vcoidcauth.Constants
+import com.ssi.oidc.vcoidcauth.dtos.CredShareResponseTokenRequest
 import com.ssi.oidc.vcoidcauth.dtos.CredentialRequirements
 import com.ssi.oidc.vcoidcauth.dtos.CredentialShareRequest
 import com.ssi.oidc.vcoidcauth.dtos.LoginRequest
@@ -27,12 +28,19 @@ class VerifierService(
                         Constants.EMAIL_CREDENTIAL_TYPE
                     )
                 )
-            )
+            ),
+            callbackUrl = "http://localhost:8080/api/v1/token"
         )
         val login = login()
         return cloudWalletApiClient.buildCredentialShareRequest(login.accessToken, credentialShareRequest)
     }
 
     private fun login() = cloudWalletApiClient.login(LoginRequest(verifierUserName, verifierPassword))
+
+    fun verifyShareResponseToken(shareResponseTokenRequest: CredShareResponseTokenRequest) {
+        val login = login()
+        val response = verifierApiClient.verifyShareResponseToken(login.accessToken, shareResponseTokenRequest)
+        println("verifyShareResponseToken RESPONSE:: $response")
+    }
 
 }

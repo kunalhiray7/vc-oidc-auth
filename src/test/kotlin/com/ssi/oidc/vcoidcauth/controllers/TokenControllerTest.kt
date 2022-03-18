@@ -1,5 +1,6 @@
 package com.ssi.oidc.vcoidcauth.controllers
 
+import com.ssi.oidc.vcoidcauth.dtos.VerifyCredentialShareTokenRequest
 import com.ssi.oidc.vcoidcauth.exceptions.CredShareRequestTokenNotFoundException
 import com.ssi.oidc.vcoidcauth.services.AuthService
 import org.junit.jupiter.api.BeforeEach
@@ -52,5 +53,14 @@ class TokenControllerTest {
                 status { isNotFound() }
             }
         verify(authService, times(1)).fetchCredShareRequestToken(tokenId)
+    }
+
+    @Test
+    fun `POST verify share tokens should verify the credential share request and response tokens from holder`() {
+        val request = VerifyCredentialShareTokenRequest(
+            credentialShareRequestToken = "sjadfnjasdnfkals",
+            credentialShareResponseToken = "flsdanflkdsnfk"
+        )
+
     }
 }

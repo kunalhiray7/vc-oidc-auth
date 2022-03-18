@@ -1,6 +1,7 @@
 package com.ssi.oidc.vcoidcauth.services
 
 import com.ssi.oidc.vcoidcauth.domain.CredentialShareResponseEntity
+import com.ssi.oidc.vcoidcauth.dtos.CredShareResponseTokenRequest
 import com.ssi.oidc.vcoidcauth.dtos.OidcAuthRequest
 import com.ssi.oidc.vcoidcauth.exceptions.CredShareRequestTokenNotFoundException
 import com.ssi.oidc.vcoidcauth.exceptions.UnAuthorizedClientException
@@ -29,6 +30,10 @@ class AuthService(
         val credentialShareResponseEntity = credentialShareTokenRepository.findById(tokenId)
             .orElseThrow { CredShareRequestTokenNotFoundException("No token found for given ID") }
         return credentialShareResponseEntity.token
+    }
+
+    fun verifyShareResponse(shareResponseTokenRequest: CredShareResponseTokenRequest) {
+        verifierService.verifyShareResponseToken(shareResponseTokenRequest)
     }
 
 }

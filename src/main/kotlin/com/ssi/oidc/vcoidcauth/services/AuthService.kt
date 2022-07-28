@@ -32,8 +32,7 @@ class AuthService(
         return credentialShareResponseEntity.token
     }
 
-    fun verifyShareResponse(shareResponseTokenRequest: CredShareResponseTokenRequest) {
+    fun verifyShareResponse(shareResponseTokenRequest: CredShareResponseTokenRequest) =
         verifierService.verifyShareResponseToken(shareResponseTokenRequest)
-    }
 
 }

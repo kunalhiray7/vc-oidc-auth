@@ -2,7 +2,9 @@ package com.ssi.oidc.vcoidcauth.controllers
 
 import com.ssi.oidc.vcoidcauth.dtos.CredShareResponseTokenRequest
 import com.ssi.oidc.vcoidcauth.dtos.OidcAuthRequest
+import com.ssi.oidc.vcoidcauth.dtos.VerificationResponse
 import com.ssi.oidc.vcoidcauth.services.AuthService
+import com.ssi.oidc.vcoidcauth.services.TokenService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -22,7 +24,8 @@ import javax.servlet.http.HttpServletResponse
 class AuthController(
     private val service: AuthService,
     @Value("\${self.baseUrl}")
-    private val selfBaseUrl: String
+    private val selfBaseUrl: String,
+    private val tokenService: TokenService
 ) {
 
     @PostMapping("/api/v1/authorize", consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE])
@@ -55,16 +58,16 @@ class AuthController(
         return "greeting"
     }
 
-    @PostMapping("/api/v1/verify_share_response_token")
-    @ResponseStatus(HttpStatus.FOUND)
-    fun verifyShareResponse(
-        @RequestBody shareResponseTokenRequest: CredShareResponseTokenRequest,
-        redirectAttributes: RedirectAttributes
-    ): RedirectView {
-        service.verifyShareResponse(shareResponseTokenRequest)
-        redirectAttributes.addAttribute("id_token", "jwtToken")
-        return RedirectView("id_token")
-    }
+//    @PostMapping("/api/v1/verify_share_response_token")
+//    @ResponseStatus(HttpStatus.FOUND)
+//    fun verifyShareResponse(
+//        @RequestBody shareResponseTokenRequest: CredShareResponseTokenRequest,
+//        redirectAttributes: RedirectAttributes
+//    ): RedirectView {
+//        service.verifyShareResponse(shareResponseTokenRequest)
+//        redirectAttributes.addAttribute("id_token", "jwtToken")
+//        return RedirectView("id_token")
+//    }
 
     @GetMapping("/api/v1/id_token")
     @ResponseStatus(HttpStatus.FOUND)
